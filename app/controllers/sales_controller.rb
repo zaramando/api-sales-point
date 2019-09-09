@@ -9,15 +9,25 @@ class SalesController < ApplicationController
   end
 
   # GET /sales/1
-  def show
-    render json: @sale
+  def show    
+    @products = @sale.sales_products
+    #@list_products = [] 
+    #@products.each do |item|
+     # @list_products << item.product
+    #end  
+
+    render json: { id: @sale[:id], payment: @sale[:payment], products: @products}, status: :ok
   end
 
   # POST /sales
   def create
-    @sale = Sale.new(sale_params)
+    @sale = @current_user.sales.new(payment: sale_params[:payment] )
 
     if @sale.save
+      sale_params[:products].each do |item_product|
+        @sales_products = @sale.sales_products.new(item_product)
+        @sales_products.save                  
+    end  
       render json: @sale, status: :created, location: @sale
     else
       render json: @sale.errors, status: :unprocessable_entity
@@ -46,6 +56,7 @@ class SalesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def sale_params
-      params.require(:sale).permit(:payment, :payment, :user_id, products: [:product_id, :quantity])
+      params.require(:sale).permit(:payment, :products => [:product_id, :quantity])     
     end
+
 end
