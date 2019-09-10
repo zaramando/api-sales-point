@@ -1,11 +1,31 @@
 class ApplicationController < ActionController::API
-    before_action :authenticate_request   
+    before_action :set_jbuilder_defaults 
+    before_action :authenticate_request      
     attr_reader :current_user
 
-    private
+
+    protected
 
     def authenticate_request
         @current_user = AuthorizeApiRequest.call(request.headers).result
-        render json: { error: 'Not Authorized' }, status: 401 unless @current_user
+        #render json: { error: 'Not Authorized' }, status: :unauthorized unless @current_user
+        error!("Not Authorized", :unauthorized) unless @current_user
+    end    
+
+    def set_jbuilder_defaults
+        @errors = []
     end
+    
+    def error!(message,status)     
+        @errors << message
+        response.status = status
+        render template: "errors"
+    end
+    
+    def error_array!(array,status)
+        @errors = @errors + array
+        response.status = status
+        render template: "errors"
+    end 
+    
 end

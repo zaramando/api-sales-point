@@ -1,53 +1,52 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :update, :destroy]
- 
+  before_action :set_product, only: [:show, :update, :destroy]  
+
+  
   # GET /products
   def index
     if params[:code].present?       
       if @product = Product.find_by(code: params[:code])
-        render json: @product, status: :ok
+        render action: "show", layout: "layouts/application" 
       else
-        render json: { errors: "Product with code #{params[:code]} not found." }, status: :not_found
+        error!("Product with code #{params[:code]} not found", :not_found)
       end  
     else  
       @products = Product.all
-      render json: @products
+      render action: "index", layout: "layouts/application"       
     end 
   end
 
   # GET /products/1
   def show
-    render json: @product
+    render action: "show", layout: "layouts/application"     
   end
 
   # POST /products
-  def create
-   # @product = Product.new(product_params)
+  def create   
    @product = @current_user.products.new(product_params)
 
     if @product.save
        @stock = Stock.new(quantity: 1)
        @stock.product = @product
        @stock.save
-      render json: @product, status: :created, location: @product
+      render action: "show", layout: "layouts/application", status: :created
     else
-      render json: @product.errors, status: :unprocessable_entity
+      error_array!(@product.errors.full_messages, :unprocessable_entity)
     end
   end
 
   # PATCH/PUT /products/1
   def update
     if @product.update(product_params)
-      render json: @product
+      render action: "show", layout: "layouts/application"
     else
-      render json: @product.errors, status: :unprocessable_entity
+      error_array!(@product.errors.full_messages, :unprocessable_entity)
     end
   end
 
   # DELETE /products/1
   def destroy
     @product.destroy    
-    render json: { errors: "Product successfully removed." }, status: :ok
   end
 
   private
