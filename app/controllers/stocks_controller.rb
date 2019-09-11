@@ -1,4 +1,5 @@
 class StocksController < ApplicationController
+  skip_before_action :authenticate_request
   before_action :set_stock, only: [:show, :update]
 
   # GET /stocks
