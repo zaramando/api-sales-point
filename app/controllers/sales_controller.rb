@@ -1,5 +1,4 @@
 class SalesController < ApplicationController
-  skip_before_action :authenticate_request
   before_action :set_sale, only: [:show, :update, :destroy]
 
   # GET /sales
