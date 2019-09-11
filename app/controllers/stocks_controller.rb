@@ -6,29 +6,29 @@ class StocksController < ApplicationController
     if params[:code].present?
       begin               
         @stock = Stock.find_by_code( params[:code] )
-        render json: @stock, status: :ok
-      rescue
-        render json: { errors: "Product with code #{params[:code]} not found." }, status: :not_found
+        render action: "show", layout: "layouts/application" 
+      rescue        
+        error!("Product with code #{params[:code]} not found", :not_found)
       end   
     else      
       @stocks = Stock.total
 
-      render json: @stocks
+      render action: "index", layout: "layouts/application" 
     end
     
   end
 
   # GET /stocks/1
   def show
-    render json: @stock
+    render action: "show", layout: "layouts/application"
   end
 
   # PATCH/PUT /stocks/1
   def update
     if @stock.update_quantity
-      render json: @stock
+      render action: "show", layout: "layouts/application"
     else
-      render json: @stock.errors, status: :unprocessable_entity
+      error_array!(@stock.full_messages, :unprocessable_entity)
     end
   end
 

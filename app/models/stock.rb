@@ -10,7 +10,7 @@ class Stock < ApplicationRecord
   #scope :items, ->{joins(:product)}
   def self.total
     Stock.joins(:product).
-    select('stocks.*, products.name, products.code, products.price')
+    select('stocks.*, products.name, products.code, products.price, products.description' )
   end
 
   def self.find_by_code(code)

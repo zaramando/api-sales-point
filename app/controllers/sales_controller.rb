@@ -5,18 +5,15 @@ class SalesController < ApplicationController
   def index
     @sales = Sale.all
 
-    render json: @sales
+    render action: "index", layout: "layouts/application"
   end
 
   # GET /sales/1
   def show    
-    @products = @sale.sales_products
-    #@list_products = [] 
-    #@products.each do |item|
-     # @list_products << item.product
-    #end  
+    @products = @sale.sales_products     
 
-    render json: { id: @sale[:id], payment: @sale[:payment], products: @products}, status: :ok
+    #render json: { id: @sale[:id], payment: @sale[:payment], products: @products}, status: :ok
+    render action: "show", layout: "layouts/application"     
   end
 
   # POST /sales
