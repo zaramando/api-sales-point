@@ -10,9 +10,8 @@ class SalesController < ApplicationController
 
   # GET /sales/1
   def show    
-    @products = @sale.sales_products     
-
-    #render json: { id: @sale[:id], payment: @sale[:payment], products: @products}, status: :ok
+    @products = @sale.sales_products
+   
     render action: "show", layout: "layouts/application"     
   end
 
