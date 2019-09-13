@@ -28,15 +28,11 @@ module ApiApp
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
-    config.middleware.insert_before 0, Rack::Cors  do
+    config.middleware.insert_before 0, Rack::Cors do
       allow do
-         origins 'localhost:3000', '127.0.0.1:3000','*'
-         resource '*', :headers => :any, :methods => [:get, :post, :put, :delete, :options],
-         headers: 'x-domain-token',
-          expose: ['Some-Custom-Response-Header'],
-          max_age: 600
-          # headers to expose
-       end
+        origins '*'
+        resource '*', headers: :any, methods: [:get, :post, :put, :patch, :delete, :head :options]
+      end
     end
     # Only loads a smaller set of middleware suitable for API only apps.
     # Middleware like session, flash, cookies can be added back manually.
