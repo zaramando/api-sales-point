@@ -24,7 +24,9 @@ class ProductsController < ApplicationController
 
   # POST /products
   def create   
-   @product = @current_user.products.new(product_params)
+   #@product = @current_user.products.new(product_params)
+   @product = Product.new(product_params)
+
 
     if @product.save
        @stock = Stock.new(quantity: 1)
@@ -58,6 +60,6 @@ class ProductsController < ApplicationController
     
     # Only allow a trusted parameter "white list" through.
     def product_params
-      params.require(:product).permit(:name, :code, :price, :description)
+      params.require(:product).permit(:name, :code, :price, :description, :user_id)
     end
 end
