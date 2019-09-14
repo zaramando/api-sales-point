@@ -1,8 +1,9 @@
 class ApplicationController < ActionController::API
     before_action :set_jbuilder_defaults
     before_action :cors_set_access_control_headers 
-    before_action :xhr_options_request    
-    before_action :authenticate_request         
+    before_action :authenticate_request
+    before_action :xhr_options_request  
+             
     attr_reader :current_user
 
 
