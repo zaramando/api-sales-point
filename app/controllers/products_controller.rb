@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :update, :destroy]
-  skip_before_action :authenticate_request  
+  #skip_before_action :authenticate_request  
 
   
   # GET /products
@@ -24,8 +24,8 @@ class ProductsController < ApplicationController
 
   # POST /products
   def create   
-   #@product = @current_user.products.new(product_params)
-   @product = Product.new(product_params)
+   @product = @current_user.products.new(product_params)
+   #@product = Product.new(product_params)
 
 
     if @product.save
