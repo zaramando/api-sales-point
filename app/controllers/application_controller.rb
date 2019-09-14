@@ -12,6 +12,9 @@ class ApplicationController < ActionController::API
         headers['Access-Control-Allow-Credentials'] = true
     end    
 
+    def xhr_options_request
+        head :ok
+    end
 
     protected
 
