@@ -1,7 +1,15 @@
 class ApplicationController < ActionController::API
     before_action :set_jbuilder_defaults 
-    before_action :authenticate_request      
+    before_action :authenticate_request
+    after_action :cors_set_access_control_headers      
     attr_reader :current_user
+
+
+    def cors_set_access_control_headers
+        headers['Access-Control-Allow-Origin'] = "*"
+        headers['Access-Control-Allow-Methods']= "POST,GET,PUT,DELETE,OPTIONS"
+        headers['Access-Control-Allow-Headers'] = 'Origin,Content-Type,Accept,Authorization,Token'
+    end    
 
 
     protected
