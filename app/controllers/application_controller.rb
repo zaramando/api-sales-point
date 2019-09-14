@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::API
-    before_action :set_jbuilder_defaults 
-    before_action :authenticate_request
-    after_action :cors_set_access_control_headers      
+    before_action :set_jbuilder_defaults
+    before_action :cors_set_access_control_headers  
+    before_action :authenticate_request         
     attr_reader :current_user
 
 
@@ -11,10 +11,6 @@ class ApplicationController < ActionController::API
         headers['Access-Control-Allow-Headers'] = 'Origin,Content-Type,Accept,Authorization,Token'
         headers['Access-Control-Allow-Credentials'] = true
     end    
-
-    def xhr_options_request
-        head :ok
-    end
 
     protected
 
