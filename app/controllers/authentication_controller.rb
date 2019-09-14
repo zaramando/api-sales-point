@@ -10,8 +10,5 @@ class AuthenticationController < ApplicationController
         render json: { error: command.errors }, status: :unauthorized
       end
     end
-
-    def xhr_options_request
-      head :ok
-    end
+    
 end
