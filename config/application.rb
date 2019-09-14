@@ -30,9 +30,9 @@ module ApiApp
     # the framework and any gems in your application.
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins '181.140.1.39'
-        resource '*', headers: :any, methods: [:get, :post, :put, :patch, :delete, :head, :options],
-                 credentials: true
+        origins '*'
+        
+        resource '*', headers: :any, methods: [:get, :post, :put, :patch, :delete, :head, :options]
       end
     end
     # Only loads a smaller set of middleware suitable for API only apps.
