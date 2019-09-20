@@ -10,12 +10,17 @@ group :development, :test do
   gem 'sqlite3', '~> 1.4'
 end
 
-group :production, :test do
-  gem 'pg', '~> 1.1', '>= 1.1.4'
+group :production do
+  #gem 'pg', '~> 1.1', '>= 1.1.4'
+  gem 'mysql'
 end
 
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
+
+group :production do
+  gem 'passenger', '5.0.28'
+end
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
