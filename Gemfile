@@ -19,7 +19,7 @@ end
 gem 'puma', '~> 3.11'
 
 group :production do
-  gem 'passenger', '5.0.28'
+  gem 'passenger', '>= 5.1.0'
 end
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
