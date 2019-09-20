@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.1'
+ruby '2.6.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.0.rc1'
@@ -10,17 +10,12 @@ group :development, :test do
   gem 'sqlite3', '~> 1.4'
 end
 
-group :production do
-  #gem 'pg', '~> 1.1', '>= 1.1.4'
-  gem 'mysql2'
+group :production, :test do
+  gem 'pg', '~> 1.1', '>= 1.1.4'
 end
 
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
-
-group :production do
-  gem 'passenger', '>= 5.1.0'
-end
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
