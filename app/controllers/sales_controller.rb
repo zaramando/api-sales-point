@@ -9,8 +9,9 @@ class SalesController < ApplicationController
   end
 
   # GET /sales/1
-  def show    
-    @products = @sale.sales_products
+  def show
+        
+    @products = Sale.sales_products(params[:id])
    
     render action: "show", layout: "layouts/application"     
   end
