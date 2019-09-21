@@ -25,11 +25,19 @@ class StocksController < ApplicationController
 
   # PATCH/PUT /stocks/1
   def update
-    if @stock.update_quantity
-      render action: "show", layout: "layouts/application"
-    else
-      error_array!(@stock.full_messages, :unprocessable_entity)
-    end
+    if params[:quantity].present?
+      if @stock.update(quantity: params[:quantity])
+        render action: "show", layout: "layouts/application"
+      else
+        error_array!(@stock.errors.full_messages, :unprocessable_entity)
+      end
+    else    
+      if @stock.update_quantity
+        render action: "show", layout: "layouts/application"
+      else
+        error_array!(@stock.full_messages, :unprocessable_entity)
+      end
+    end  
   end
 
   private

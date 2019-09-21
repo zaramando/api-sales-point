@@ -25,18 +25,18 @@ class SalesController < ApplicationController
         @sales_products = @sale.sales_products.new(item_product)
         @sales_products.save                  
     end  
-      render json: @sale, status: :created, location: @sale
+      render action: "show", layout: "layouts/application"  
     else
-      render json: @sale.errors, status: :unprocessable_entity
+      error_array!(@sale.errors.full_messages, :unprocessable_entity)
     end
   end
 
   # PATCH/PUT /sales/1
   def update
     if @sale.update(sale_params)
-      render json: @sale
+      render action: "show", layout: "layouts/application"  
     else
-      render json: @sale.errors, status: :unprocessable_entity
+      error_array!(@sale.errors.full_messages, :unprocessable_entity)
     end
   end
 
