@@ -11,7 +11,7 @@ class SalesController < ApplicationController
   # GET /sales/1
   def show
         
-    @products = Sale.sales_products(params[:id])
+    @products = set_products(params[:id])
    
     render action: "show", layout: "layouts/application"     
   end
@@ -22,9 +22,13 @@ class SalesController < ApplicationController
 
     if @sale.save
       sale_params[:products].each do |item_product|
-        @sales_products = @sale.sales_products.new(item_product)
-        @sales_products.save                  
-    end  
+        @sale_product = @sale.sales_products.new(item_product)
+        if @sale_product.save
+          @stock = @sale_product.product.stock
+          @stock.update_quantity_down(item_product[:quantity])
+        end                    
+      end  
+      @products = set_products(@sale[:id])
       render action: "show", layout: "layouts/application"  
     else
       error_array!(@sale.errors.full_messages, :unprocessable_entity)
@@ -50,6 +54,10 @@ class SalesController < ApplicationController
     def set_sale
       @sale = Sale.find(params[:id])
     end
+
+    def set_products(id)
+      @products = Sale.sales_products(id)
+    end  
 
     # Only allow a trusted parameter "white list" through.
     def sale_params

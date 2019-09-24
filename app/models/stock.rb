@@ -7,6 +7,14 @@ class Stock < ApplicationRecord
     self.update(quantity: self.quantity + 1)
   end 
 
+  def update_quantity_up(quantity)
+    self.update(quantity: self.quantity + quantity)
+  end
+
+  def update_quantity_down(quantity)
+    self.update(quantity: self.quantity - quantity)
+  end
+
   #scope :items, ->{joins(:product)}
   def self.total
     Stock.joins(:product).
